@@ -185,7 +185,7 @@ function tick(){
       const dx = nodes[i].x-nodes[j].x, dy = nodes[i].y-nodes[j].y;
       const dist = Math.sqrt(dx*dx+dy*dy);
       if(dist < 150){
-        ctx.strokeStyle = `rgba(124,58,237,${(1-dist/150)*0.22})`;
+        ctx.strokeStyle = `rgba(220,38,38,${(1-dist/150)*0.22})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(nodes[i].x, nodes[i].y);
@@ -193,7 +193,7 @@ function tick(){
         ctx.stroke();
       }
     }
-    ctx.fillStyle = 'rgba(255,217,61,0.85)';
+    ctx.fillStyle = 'rgba(220,38,38,0.85)';
     ctx.beginPath();
     ctx.arc(nodes[i].x, nodes[i].y, 1.5, 0, Math.PI*2);
     ctx.fill();
