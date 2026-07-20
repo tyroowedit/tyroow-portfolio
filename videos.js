@@ -27,5 +27,5 @@ const generalEdits = [
    { youtubeId: "4ea1hvMmEE0", wide: false, title: "@YellowPack" },
   { youtubeId: "vZqRYxMWpbc", wide: true, title: "FÃ EDIT JOGANDOFODACCI" },
   { youtubeId: "Bpa_iLFk2DE", wide: true, title: "Edição Finanças" },
-   { youtubeId: "zXWAqEo-Q4o", wide: true, title: "FÃ EDIT BOSCO" },
+  { youtubeId: "zXWAqEo-Q4o", wide: true, title: "FÃ EDIT BOSCO" },
 ];
