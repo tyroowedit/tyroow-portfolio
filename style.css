@@ -5,8 +5,8 @@
 :root{
   --bg:#000000;
   --panel:#0C0A10;
-  --purple:#7C3AED;
-  --purple-dim:#3F2A73;
+   --purple:#DC2626;
+   --purple-dim:#7A1616;
   --yellow:#FFD93D;
   --text:#EDEAF7;
   --text-dim:#8B8699;
@@ -99,7 +99,7 @@ nav{
 }
 .hero-bg{
   position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 40%, rgba(124,58,237,.10), transparent 55%);
+  background:radial-gradient(circle at 50% 40%, rgba(220,38,38,.10), transparent 55%);
 }
 /* To use a real background video of you editing instead of the gradient:
    <video autoplay muted loop playsinline class="hero-video">
@@ -148,7 +148,7 @@ section{padding:7rem 5%;max-width:1200px;margin:0 auto;position:relative;}
 
 /* DexLore — darker, moodier treatment so it reads as a distinct "dark" channel */
 #dexlore{
-  background:radial-gradient(ellipse at 50% 0%, rgba(124,58,237,.06), transparent 60%);
+  background:radial-gradient(ellipse at 50% 0%, rgba(220,38,38,.06), transparent 60%);
 }
 #dexlore::before{
   content:'';position:absolute;inset:0;
@@ -201,7 +201,7 @@ section{padding:7rem 5%;max-width:1200px;margin:0 auto;position:relative;}
 .card.wide{aspect-ratio:16/10;}
 .card:hover{
   transform:scale(1.05);
-  box-shadow:0 15px 40px rgba(124,58,237,.35);
+  box-shadow:0 15px 40px rgba(220,38,38,.35);
   z-index:5;
 }
 .card .thumb{
@@ -225,7 +225,7 @@ section{padding:7rem 5%;max-width:1200px;margin:0 auto;position:relative;}
   display:flex;align-items:center;justify-content:center;
   transition:transform .3s, background .3s;
 }
-.card:hover .play-icon{transform:scale(1.15);background:rgba(124,58,237,.5);}
+.card:hover .play-icon{transform:scale(1.15);background:rgba(220,38,38,.5);}
 .play-icon::after{content:'';border-style:solid;border-width:7px 0 7px 11px;border-color:transparent transparent transparent #fff;margin-left:3px;}
 
 .card .meta{
@@ -257,7 +257,7 @@ section{padding:7rem 5%;max-width:1200px;margin:0 auto;position:relative;}
 .deco-img{
   position:relative;z-index:1;
   max-width:70%;max-height:70%;object-fit:contain;
-  filter:drop-shadow(0 0 25px rgba(124,58,237,.4));
+  filter:drop-shadow(0 0 25px rgba(220,38,38,.4));
 }
 
 /* CONTACT */
