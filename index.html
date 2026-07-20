@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tyroow's portfolio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="netCanvas"></canvas>
+
+<nav>
+  <div class="logo">tyroow<span>.</span></div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#home" data-i18n="nav_home">Início</a></li>
+      <li><a href="#dexlore">DexLore</a></li>
+      <li><a href="#edits" data-i18n="nav_edits">Edições</a></li>
+      <li><a href="#about" data-i18n="nav_about">Sobre</a></li>
+      <li><a href="#contact" data-i18n="nav_contact">Contato</a></li>
+    </ul>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="pt" title="Português" aria-label="Português">
+        <svg viewBox="0 0 24 16" width="22" height="15"><rect width="24" height="16" fill="#0B3D0B"/><polygon points="12,2 22,8 12,14 2,8" fill="#FFD93D"/><circle cx="12" cy="8" r="3.5" fill="#0B3D91"/></svg>
+      </button>
+      <button class="lang-btn" data-lang="en" title="English" aria-label="English">
+        <svg viewBox="0 0 24 16" width="22" height="15"><rect width="24" height="16" fill="#B22234"/><rect y="1.6" width="24" height="1.6" fill="#fff"/><rect y="4.8" width="24" height="1.6" fill="#fff"/><rect y="8" width="24" height="1.6" fill="#fff"/><rect y="11.2" width="24" height="1.6" fill="#fff"/><rect y="14.4" width="24" height="1.6" fill="#fff"/><rect width="10" height="8.6" fill="#3C3B6E"/></svg>
+      </button>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <!-- this is YOUR profile photo / logo, add it later as assets/avatar.jpg and swap the div below -->
+    <div class="avatar"><img src="assets/avatar.jpg"></div>
+    <h1 data-i18n="hero_title">tyroow<span>'s</span> portfolio</h1>
+  </div>
+  <div class="scroll-hint" data-i18n="scroll">role</div>
+</section>
+
+<section id="dexlore">
+  <div class="section-head reveal">
+    <div>
+      <div class="dark-tag" data-i18n="dark_tag">// CANAL DARK //</div>
+      <div class="eyebrow" data-i18n="channel_label">Canal</div>
+      <h2>DexLore</h2>
+    </div>
+    <a class="channel-tag" href="https://www.youtube.com/@TheDexLore" target="_blank" rel="noopener">
+      <!-- this is the DexLore channel photo, add it later as assets/dexlore.jpg and swap the div below -->
+      <div class="dot"><img src="assets/dexlore.jpg"></div>
+      <span data-i18n="watch_yt">@DexLore &nbsp;→&nbsp; assistir no YouTube</span>
+    </a>
+  </div>
+  <div class="grid reveal" id="dexloreGrid"></div>
+</section>
+
+<section id="edits">
+  <div class="section-head reveal">
+    <div>
+      <div class="eyebrow" data-i18n="archive_label">Arquivos</div>
+      <h2 data-i18n="edits_title">Edições Gerais</h2>
+    </div>
+  </div>
+  <div class="grid reveal" id="editsGrid"></div>
+</section>
+
+<section id="about">
+  <div class="about">
+    <div class="reveal">
+      <div class="eyebrow" data-i18n="about_label">Sobre Mim</div>
+      <h2 data-i18n="about_title">Feito para o corte que prende quem assiste.</h2>
+      <p data-i18n="about_p1">Passo mais tempo numa timeline do que a maioria passa numa mesa de trabalho, e isso mostra no resultado. Meu estilo de edição é feito pra prender rápido e manter: ritmo certeiro, som bem trabalhado e cortes que fazem seu video ficar muito mais interessante..</p>
+      <p data-i18n="about_p2">Seja um short de 30 segundos sobre lore de Pokémon ou uma edição longa, o objetivo é sempre o mesmo: entregar o melhor vídeo pra você.</p>
+      <div class="stat-line">
+        <div><span data-i18n="stat1_val">3+</span><small data-i18n="stat1_label">ANOS EDITANDO</small></div>
+        <div><span>DEXLORE</span><small data-i18n="stat2_label">CANAL PRÓPRIO</small></div>
+        <div><span data-i18n="stat3_val">SHORTS + LONGOS</span><small data-i18n="stat3_label">FORMATO</small></div>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <!-- decorative umbreon image, lives in assets/umbreon.webp -->
+      <img src="assets/umbreon.webp" alt="umbreon" class="deco-img">
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="reveal">
+    <div class="eyebrow" style="justify-content:center;" data-i18n="contact_label">Contato</div>
+    <h2 data-i18n="contact_title"><span>o SEU</span> novo editor, só chamar!</h2>
+    <p data-i18n="contact_sub">Chama na plataforma que for mais fácil pra você, eu acompanho todas.</p>
+    <div class="socials">
+      <a class="social-btn" href="https://www.tiktok.com/@tyrooowedit" target="_blank" rel="noopener" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a class="social-btn" href="https://www.instagram.com/tyroowedit/" target="_blank" rel="noopener" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <button class="social-btn wide" id="discordCopy" type="button" title="Copiar usuário do Discord">
+        <i class="fa-brands fa-discord"></i><span id="discordLabel">tyroow</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<footer data-i18n="footer">© 2026 tyroow. Feito do zero, hospedado no GitHub Pages.</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <button class="modal-close" id="modalClose">×</button>
+  <div class="modal">
+    <div class="modal-video" id="modalVideo" data-i18n="modal_placeholder">Player do YouTube aparece aqui</div>
+    <div class="modal-body">
+      <h3 id="modalTitle"></h3>
+    </div>
+  </div>
+</div>
+
+<script src="videos.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
