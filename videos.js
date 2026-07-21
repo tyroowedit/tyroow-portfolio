@@ -24,7 +24,6 @@ const dexloreVideos = [
 
 const generalEdits = [
   { youtubeId: "f4t1kZp1X2Y", wide: false, title: "FÃ EDIT BISTECONE" },
-   { youtubeId: "4ea1hvMmEE0", wide: false, title: "@YellowPack" },
   { youtubeId: "vZqRYxMWpbc", wide: true, title: "FÃ EDIT JOGANDOFODACCI" },
   { youtubeId: "Bpa_iLFk2DE", wide: true, title: "Edição Finanças" },
   { youtubeId: "zXWAqEo-Q4o", wide: true, title: "FÃ EDIT BOSCO" },
