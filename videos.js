@@ -27,4 +27,5 @@ const generalEdits = [
   { youtubeId: "vZqRYxMWpbc", wide: true, title: "FÃ EDIT JOGANDOFODACCI" },
   { youtubeId: "Bpa_iLFk2DE", wide: true, title: "Edição Finanças" },
   { youtubeId: "zXWAqEo-Q4o", wide: true, title: "FÃ EDIT BOSCO" },
+   { youtubeId: "ywGRT50LsvA", wide: true, title: "edit teste intro de valorant" },
 ];
