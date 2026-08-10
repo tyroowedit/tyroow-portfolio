@@ -15,6 +15,8 @@ const i18n = {
     cta_work:"SEE MY WORK", cta_contact:"GET IN TOUCH",
     scroll:"SCROLL",
     work_label:"Selected Work", work_title:"Edits",
+    cat_global:"Global", cat_br:"Brasil",
+    cat_hint_text:"psst — try switching regions",
     about_label:"About",
     about_text:"I spend more time on a timeline than most people spend at a desk. <span>Every cut has a purpose,</span> from the first second to the last.",
     stat1_val:"3+", stat1_label:"YEARS EDITING",
@@ -36,6 +38,8 @@ const i18n = {
     cta_work:"VER TRABALHOS", cta_contact:"FALAR COMIGO",
     scroll:"ROLE",
     work_label:"Trabalhos", work_title:"Edições",
+    cat_global:"Global", cat_br:"Brasil",
+    cat_hint_text:"psiu — troca a região aí",
     about_label:"Sobre",
     about_text:"Passo mais tempo numa timeline do que a maioria passa numa mesa. <span>Cada corte tem um propósito,</span> do primeiro segundo ao último.",
     stat1_val:"3+", stat1_label:"ANOS EDITANDO",
@@ -55,7 +59,7 @@ let currentLang = 'en';
 
 function renderMarquee(){
   const words = i18n[currentLang].marquee;
-  const html = words.map(w => `<span>${w}</span>`).join('') ;
+  const html = words.map(w => `<span>${w}</span>`).join('');
   document.getElementById('marqueeTrack').innerHTML = html + html; // duplicated for seamless loop
 }
 
@@ -67,85 +71,96 @@ function applyLang(lang){
     if(i18n[lang][key] !== undefined) el.innerHTML = i18n[lang][key];
   });
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-  renderGrid();
+  renderGrid(false);
   renderMarquee();
 }
 document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => applyLang(btn.dataset.lang)));
 
+/* ---------------- region switch (global / brasil) ---------------- */
+let currentCategory = 'global';
+const catButtons = document.querySelectorAll('.cat-btn');
+const catIndicator = document.getElementById('catIndicator');
+const categoryHint = document.getElementById('categoryHint');
+
+function dismissHint(){
+  if(!categoryHint) return;
+  categoryHint.classList.add('hidden');
+  try{ localStorage.setItem('tyroow_categoryHintSeen', '1'); }catch(e){}
+  setTimeout(() => { categoryHint.remove(); }, 450);
+}
+let hintAlreadySeen = false;
+try{ hintAlreadySeen = !!localStorage.getItem('tyroow_categoryHintSeen'); }catch(e){}
+if(hintAlreadySeen && categoryHint) categoryHint.remove();
+
+function setCategory(cat){
+  if(cat === currentCategory) return;
+  currentCategory = cat;
+  catButtons.forEach(b => b.classList.toggle('active', b.dataset.category === cat));
+  catIndicator.style.transform = cat === 'global' ? 'translateX(0)' : 'translateX(100%)';
+  renderGrid(true);
+  dismissHint();
+}
+catButtons.forEach(btn => btn.addEventListener('click', () => setCategory(btn.dataset.category)));
+
 /* ---------------- video grid ---------------- */
 function thumbUrl(id){ return `https://img.youtube.com/vi/${id}/hqdefault.jpg`; }
 
-function renderGrid(){
+function paintGrid(){
   const el = document.getElementById('workGrid');
   const t = i18n[currentLang];
-  el.innerHTML = videos.map((v, i) => {
+  const filtered = videos.filter(v => (v.category || 'global') === currentCategory);
+
+  el.innerHTML = filtered.map((v, i) => {
+    const realIndex = videos.indexOf(v);
     const label = (v.title && v.title.trim()) ? v.title : `${t.video_label} ${i+1}`;
     const bg = v.youtubeId ? `background-image:url('${thumbUrl(v.youtubeId)}');` : `background:linear-gradient(145deg,#1a1414,#000);`;
     return `
-    <div class="card ${v.wide ? 'wide' : ''}" data-index="${i}">
+    <div class="card enter ${v.wide ? 'wide' : ''}" data-index="${realIndex}" style="transition-delay:${i*60}ms">
       <div class="thumb" style="${bg}"><div class="play-icon"></div></div>
       <div class="meta"><h4>${label}</h4><p>${v.youtubeId ? t.tap_watch : t.add_id}</p></div>
     </div>`;
   }).join('');
+
+  // stagger the entrance: two rAFs so the browser paints the initial (hidden) state first
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      el.querySelectorAll('.card.enter').forEach(c => c.classList.add('enter-active'));
+    });
+  });
   if(isDesktop && !reducedMotion) attachTilt();
 }
-renderGrid();
+
+function renderGrid(animateSwitch){
+  const el = document.getElementById('workGrid');
+  if(animateSwitch && !reducedMotion){
+    el.classList.add('grid-fade-out');
+    setTimeout(() => { paintGrid(); el.classList.remove('grid-fade-out'); }, 220);
+  } else {
+    paintGrid();
+  }
+}
+renderGrid(false);
 renderMarquee();
 
-/* ---------------- modal ---------------- */
+/* ---------------- modal ----------------
+   Note on video quality: YouTube's embed API no longer honors manual
+   quality requests (setPlaybackQuality / the old ?vq= param are both
+   ignored server-side now) — it always auto-picks based on player
+   size and connection. The one thing that actually helps is a
+   bigger player, which is why the modal is wider now. Autoplay is
+   started muted because mobile browsers block unmuted autoplay;
+   visitors can unmute from the YouTube controls themselves. */
 const overlay = document.getElementById('modalOverlay');
 const modalTitle = document.getElementById('modalTitle');
 const modalVideo = document.getElementById('modalVideo');
-
-/* YouTube IFrame API — loaded once, on demand, so the first
-   video played always jumps straight to the highest quality
-   the connection allows instead of YouTube's slow-start default. */
-let ytApiReady = false;
-let ytApiLoading = false;
-let ytPlayer = null;
-
-function loadYouTubeAPI(cb){
-  if(ytApiReady){ cb(); return; }
-  const prevCb = window.onYouTubeIframeAPIReady;
-  window.onYouTubeIframeAPIReady = () => { ytApiReady = true; if(prevCb) prevCb(); cb(); };
-  if(!ytApiLoading){
-    ytApiLoading = true;
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
-  } else if(ytApiReady){
-    cb();
-  }
-}
-
-function forceMaxQuality(player){
-  try{
-    const levels = player.getAvailableQualityLevels();
-    if(levels && levels.length){ player.setPlaybackQuality(levels[0]); } // levels[0] = best available
-    else { player.setPlaybackQuality('hd2160'); }
-  }catch(e){ /* no-op, just falls back to YouTube default */ }
-}
 
 function openModal(index){
   const v = videos[index];
   const t = i18n[currentLang];
   modalTitle.textContent = (v.title && v.title.trim()) ? v.title : `${t.video_label} ${index+1}`;
-
-  if(v.youtubeId){
-    modalVideo.innerHTML = `<div id="ytPlayer"></div>`;
-    loadYouTubeAPI(() => {
-      ytPlayer = new YT.Player('ytPlayer', {
-        videoId: v.youtubeId,
-        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1, vq: 'hd1080' },
-        events: {
-          onReady: (e) => { forceMaxQuality(e.target); e.target.playVideo(); },
-          onPlaybackQualityChange: (e) => { forceMaxQuality(e.target); }
-        }
-      });
-    });
-  } else {
-    modalVideo.innerHTML = t.modal_placeholder;
-  }
+  modalVideo.innerHTML = v.youtubeId
+    ? `<iframe src="https://www.youtube.com/embed/${v.youtubeId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`
+    : t.modal_placeholder;
   overlay.classList.add('open');
 }
 document.body.addEventListener('click', (e) => {
@@ -155,8 +170,7 @@ document.body.addEventListener('click', (e) => {
 });
 function closeModal(){
   overlay.classList.remove('open');
-  if(ytPlayer && ytPlayer.destroy){ ytPlayer.destroy(); ytPlayer = null; }
-  modalVideo.innerHTML = '';
+  modalVideo.innerHTML = ''; // clearing the iframe is what actually stops playback
 }
 document.getElementById('modalClose').addEventListener('click', closeModal);
 overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
@@ -248,7 +262,6 @@ if(isDesktop && !reducedMotion){
   }
   spotlightLoop();
 
-  /* magnetic buttons — subtle pull, not a full drag */
   document.querySelectorAll('.magnetic').forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
       const r = btn.getBoundingClientRect();
@@ -260,8 +273,7 @@ if(isDesktop && !reducedMotion){
   });
 }
 
-/* 3D tilt on video cards — subtle, instant while tracking the cursor,
-   smooth only on the way back out. Re-attached whenever the grid re-renders. */
+/* 3D tilt on video cards — subtle, re-attached whenever the grid re-renders */
 function attachTilt(){
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('mousemove', (e) => {
