@@ -13,7 +13,6 @@
 <body>
 
 <div id="scrollProgress"></div>
-
 <div id="spotlight"></div>
 
 <nav>
@@ -69,7 +68,20 @@
     <div class="eyebrow" data-i18n="work_label">Selected Work</div>
     <h2 data-i18n="work_title">Edits</h2>
   </div>
-  <div class="grid reveal" id="workGrid"></div>
+
+  <div class="cat-switch-wrap reveal">
+    <div class="cat-hint" id="categoryHint">
+      <span data-i18n="cat_hint_text">psst — try switching regions</span>
+      <svg class="cat-hint-arrow" viewBox="0 0 24 24" width="14" height="14"><path d="M12 4v14M6 12l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="cat-switch" id="categorySwitch">
+      <div class="cat-indicator" id="catIndicator"></div>
+      <button class="cat-btn active" data-category="global" data-i18n="cat_global">Global</button>
+      <button class="cat-btn" data-category="br" data-i18n="cat_br">Brasil</button>
+    </div>
+  </div>
+
+  <div class="grid" id="workGrid"></div>
 </section>
 
 <section id="about">
