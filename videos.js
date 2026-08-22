@@ -22,6 +22,7 @@ const videos = [
   { youtubeId: "TryCx-HtYQs", wide: false, category: "global", title: "the BEST way to macro for gems in Anime Expeditions!" },
   { youtubeId: "A4wJoz_FIME", wide: false, category: "global", title: "Tik Tok Edit Best team in Anime Expeditions!" },
   { youtubeId: "Tgywxp0y46g", wide: true, category: "global", title: "Sand's Untitled Battlegrounds Showcase" },
+  { youtubeId: "kAzK-Hq3TZs", wide: true, category: "global", title: "Roblox Page Edit for Brainrot Rivals" },
   { youtubeId: "ywGRT50LsvA", wide: true, category: "br", title: "Trecho fã edit de Minecraft do @Bosco" },
   { youtubeId: "zXWAqEo-Q4o", wide: true, category: "br", title: "teste intro de valorant @gab" },
   { youtubeId: "vZqRYxMWpbc", wide: true, category: "br", title: "Trecho fã edit do @JogandoFoddaci de Overcooked 2" },
